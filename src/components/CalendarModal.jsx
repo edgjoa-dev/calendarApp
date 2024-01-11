@@ -6,8 +6,11 @@ import Modal from "react-modal";
 import DatePicker, {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
+import Swal from 'sweetalert2'
 
+import 'sweetalert2/src/sweetalert2.scss'
 import './styles/calendarModal.css'
+
 
 registerLocale('es', es)
 
@@ -62,17 +65,35 @@ export const CalendarModal = () => {
     const difference = differenceInSeconds( formValues.end, formValues.start );
 
     if( isNaN( difference ) || difference <= 0  ){
-      console.log('Error de fechas');
+      //console.log('Error de fechas');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Fechas incorrectas, porfavor válide las fechas nuevamente',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      })
       return;
     }
 
     if( formValues.title.length <= 0 ){
-      console.log('Error de titulo');
+      //console.log('Error de titulo');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error en el titulo, porfavor válide el titulo de evento nuevemente',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      })
       return;
     }
 
     if( formValues.notes.trim().length <= 0 ){
-      console.log('Error de notas');
+      //console.log('Error de notas');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error en nota, porfavro válide la nota nuevamente',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      })
       return;
     }
 
