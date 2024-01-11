@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { addHours, differenceInSeconds } from "date-fns";
 
 
@@ -30,6 +30,7 @@ Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
   const [isOpen, setisOpen] = useState(true)
+  const [formSubmitted, setFormSubmitted] = useState(false)
   const [formValues, setFormValues] = useState({
     title: 'Edgar',
     notes: 'Esta es mi primera nota!!!',
@@ -58,9 +59,25 @@ export const CalendarModal = () => {
 
   }
 
+  const titleClassTitle = useMemo( ()=> {
+    if( !formSubmitted ) return '';
+    return ( formValues.title.trim().length > 0 )
+      ? 'is-valid'
+      : 'is-invalid'
+
+  }, [ formValues.title, formSubmitted ])
+
+  const titleClassNote = useMemo( ()=> {
+    if( !formSubmitted ) return '';
+    return ( formValues.notes.trim().length > 0 )
+      ? ''
+      : 'is-invalid'
+
+  }, [ formValues.notes, formSubmitted ])
+
   const onSubmit = (event) => {
     event.preventDefault();
-
+    setFormSubmitted(true);
     //validar la diferencia entre hora de inicio y de termino de evento
     const difference = differenceInSeconds( formValues.end, formValues.start );
 
@@ -70,7 +87,7 @@ export const CalendarModal = () => {
         title: 'Error!',
         text: 'Fechas incorrectas, porfavor válide las fechas nuevamente',
         icon: 'error',
-        confirmButtonText: 'Cool'
+        confirmButtonText: 'Ok'
       })
       return;
     }
@@ -81,7 +98,7 @@ export const CalendarModal = () => {
         title: 'Error!',
         text: 'Error en el titulo, porfavor válide el titulo de evento nuevemente',
         icon: 'error',
-        confirmButtonText: 'Cool'
+        confirmButtonText: 'Ok'
       })
       return;
     }
@@ -92,7 +109,7 @@ export const CalendarModal = () => {
         title: 'Error!',
         text: 'Error en nota, porfavro válide la nota nuevamente',
         icon: 'error',
-        confirmButtonText: 'Cool'
+        confirmButtonText: 'Ok'
       })
       return;
     }
@@ -152,7 +169,7 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${ titleClassTitle }`}
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
@@ -165,7 +182,7 @@ export const CalendarModal = () => {
         <div className="form-group mb-2">
           <textarea
             type="text"
-            className="form-control"
+            className={`form-control ${ titleClassNote }`}
             placeholder="Notas"
             rows="5"
             name="notes"
