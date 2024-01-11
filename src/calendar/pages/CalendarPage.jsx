@@ -1,11 +1,11 @@
 import { useState } from "react"
-import { addHours, set } from 'date-fns'
+import { addHours } from 'date-fns'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import { NavBar } from "../../themes"
 import { getMessagesES, localizer } from "../../helpers"
-import { CalendarEvent } from "../../components"
+import { CalendarEvent, CalendarModal } from "../../components"
 
 
 
@@ -77,6 +77,7 @@ const onViewChanged = ( event ) => {
       onSelectEvent={onSelect}
       onView={onViewChanged}
     />
+    <CalendarModal />
     </div>
   )
 }
