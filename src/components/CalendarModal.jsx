@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 
 import 'sweetalert2/src/sweetalert2.scss'
 import './styles/calendarModal.css'
+import { useUiStore } from "../hooks";
 
 
 registerLocale('es', es)
@@ -29,7 +30,8 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
 
-  const [isOpen, setisOpen] = useState(true)
+  const { isDateModalOpen, closeDateModal } = useUiStore()
+
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [formValues, setFormValues] = useState({
     title: 'Edgar',
@@ -55,8 +57,7 @@ export const CalendarModal = () => {
 
   const onCloseModal = () => {
     console.log('cerrando modal...');
-    setisOpen(false);
-
+    closeDateModal();
   }
 
   const titleClassTitle = useMemo( ()=> {
@@ -124,7 +125,7 @@ export const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       contentLabel="Example Modal"
