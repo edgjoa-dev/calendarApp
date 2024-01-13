@@ -4,7 +4,7 @@ import { addHours } from 'date-fns'
 const eventBackend = [
     {
         _id: new Date().getTime(),
-        title: 'Personal',
+        title: 'sdaffsds',
         notes: 'Mi nota personal',
         allday: true,
         start: new Date(),
