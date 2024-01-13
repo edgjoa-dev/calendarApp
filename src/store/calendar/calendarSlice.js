@@ -3,15 +3,16 @@ import { addHours } from 'date-fns'
 
 const eventBackend = [
     {
-        title: 'Cumpleaños',
-        notes: 'Esta es mi primera nota',
+        _id: new Date().getTime(),
+        title: 'Personal',
+        notes: 'Mi nota personal',
         allday: true,
         start: new Date(),
         end: addHours(new Date(), 2),
         bgColor: '#347CF7',
         user: {
           _id: '123',
-          name: 'Juan'
+          name: 'Joaquín'
         }
       }
 ]
@@ -26,11 +27,11 @@ export const calendarSlice = createSlice({
         activeEvent: null,
     },
     reducers: {
-        increment: (state) => {
-            state.value += 1
-        },
+        onSetActiveEvent: ( state, { payload } )=> {
+            state.activeEvent = payload;
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment } = calendarSlice.actions
+export const { onSetActiveEvent } = calendarSlice.actions
