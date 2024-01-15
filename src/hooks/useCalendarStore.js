@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { onAddNewEvent, onSetActiveEvent } from '../store/calendar/calendarSlice';
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent } from '../store/calendar/calendarSlice';
 
 
 export const useCalendarStore = ()=> {
@@ -16,6 +16,7 @@ export const useCalendarStore = ()=> {
         //*si pasa
         if( calendarEvent._id ){
             //*actualizar evento si existe un_id
+            dispatch( onUpdateEvent({ ...calendarEvent } ) )
         }else{
             //*creando evento
             dispatch( onAddNewEvent({ ...calendarEvent, _id: new Date().getTime() } ) )
