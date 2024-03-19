@@ -26,6 +26,24 @@ const startLogin = async({ email, password })=> {
     }
 }
 
+const startRegister = async({ name, email, password, revalidPassword })=> {
+    try {
+        const res = await calendarApi.post('/auth/register', {name, email, password, revalidPassword });
+        dispatch(onChecking());
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('token-init-date', new Date().getTime());
+        dispatch(onLogin( {name: res.data.name, uid: res.data.uid} ));
+
+    } catch (error) {
+        console.log(error);
+        dispatch(onLogout(error.response.data?.msg || 'Error de registro, intente nuevamente'));
+
+        setTimeout(()=> {
+            dispatch(clearErrorMessage());
+        }, 100)
+    }
+}
+
     return{
         //*Exportar propiedades
         status,
@@ -34,5 +52,6 @@ const startLogin = async({ email, password })=> {
 
         //*Exportar Métodos
         startLogin,
+        startRegister,
     }
 }

@@ -21,7 +21,7 @@ import './LoginPage.css'
 
     export const LoginPage = () => {
 
-    const { startLogin, errorMessage } = useAuthStore();
+    const { startLogin, startRegister, errorMessage } = useAuthStore();
 
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm( loginFormFields )
     const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormField)
@@ -34,6 +34,14 @@ import './LoginPage.css'
 
     const onRegisterSubmit = (e)=> {
         e.preventDefault();
+        if(registerPassword !== registerPassword2){
+            <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
+            toast.error('Las contraseñas deben coincidir, intenta nuevamente');
+        }
+        startRegister({ name: registerName, email: registerEmail, password: registerPassword, revalidPassword: registerPassword2});
         console.log(registerName, registerEmail, registerPassword, registerPassword2);
     }
 
