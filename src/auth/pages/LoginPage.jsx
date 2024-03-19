@@ -1,4 +1,9 @@
+import { toast, Toaster } from 'react-hot-toast';
+
+
+import { useEffect } from 'react'
 import { useAuthStore, useForm } from '../../hooks'
+
 import './LoginPage.css'
 
 
@@ -16,25 +21,38 @@ import './LoginPage.css'
 
     export const LoginPage = () => {
 
-        const { startLogin } = useAuthStore();
+    const { startLogin, errorMessage } = useAuthStore();
 
-        const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm( loginFormFields )
-        const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormField)
+    const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm( loginFormFields )
+    const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm(registerFormField)
 
-        const onLoginSubmit = (e)=> {
-            e.preventDefault();
-            startLogin({ email: loginEmail, password: loginPassword });
-            console.log(loginEmail, loginPassword);
+    const onLoginSubmit = (e)=> {
+        e.preventDefault();
+        startLogin({ email: loginEmail, password: loginPassword });
+        console.log(loginEmail, loginPassword);
+    }
+
+    const onRegisterSubmit = (e)=> {
+        e.preventDefault();
+        console.log(registerName, registerEmail, registerPassword, registerPassword2);
+    }
+
+    useEffect(()=>{
+        if( errorMessage !== undefined ) {
+            <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+            />
+            toast.error(errorMessage);
         }
-
-        const onRegisterSubmit = (e)=> {
-            e.preventDefault();
-            console.log(registerName, registerEmail, registerPassword, registerPassword2);
-        }
-
+    },[ errorMessage ]);
 
     return (
         <div className="container login-container">
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+        />
             <div className="row">
                 <div className="col-md-6 login-form-1">
                     <h3>Ingreso</h3>
