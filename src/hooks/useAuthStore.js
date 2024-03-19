@@ -44,6 +44,27 @@ const startRegister = async({ name, email, password, revalidPassword })=> {
     }
 }
 
+const checkAuthToken = async() => {
+    const token = localStorage.getItem('token');
+    if(!token) return dispatch(onLogout());
+
+    try {
+        const {data} = await calendarApi.get('/auth/revalidtoken');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('token-init-date', new Date().getTime());
+        dispatch(onLogin({name: data.name, uid: data.uid}));
+
+    } catch (error) {
+        localStorage.clear();
+        dispatch(onLogout());
+    }
+}
+
+const startAuthLogout = ()=> {
+    localStorage.clear();
+    dispatch(onLogout());
+}
+
     return{
         //*Exportar propiedades
         status,
@@ -53,5 +74,7 @@ const startRegister = async({ name, email, password, revalidPassword })=> {
         //*Exportar Métodos
         startLogin,
         startRegister,
+        checkAuthToken,
+        startAuthLogout,
     }
 }
