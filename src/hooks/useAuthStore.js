@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { calendarApi } from '../api';
 import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store/auth/authSlice';
+import { onLogoutCalendar } from '../store/calendar/calendarSlice';
 
 
 export const useAuthStore = () => {
@@ -17,7 +18,6 @@ const startLogin = async({ email, password })=> {
         dispatch(onLogin( {name: res.data.name, uid: res.data.uid} ));
 
     } catch (error) {
-        console.log(error);
         dispatch(onLogout('Credenciales incorrectas'));
 
         setTimeout(()=> {
@@ -35,7 +35,6 @@ const startRegister = async({ name, email, password, revalidPassword })=> {
         dispatch(onLogin( {name: res.data.name, uid: res.data.uid} ));
 
     } catch (error) {
-        console.log(error);
         dispatch(onLogout(error.response.data?.msg || 'Error de registro, intente nuevamente'));
 
         setTimeout(()=> {
@@ -62,6 +61,7 @@ const checkAuthToken = async() => {
 
 const startAuthLogout = ()=> {
     localStorage.clear();
+    dispatch(onLogoutCalendar())
     dispatch(onLogout());
 }
 

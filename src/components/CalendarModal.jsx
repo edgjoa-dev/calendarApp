@@ -58,7 +58,6 @@ export const CalendarModal = () => {
   }
 
   const onCloseModal = () => {
-    console.log('cerrando modal...');
     closeDateModal();
   }
 
@@ -76,11 +75,7 @@ export const CalendarModal = () => {
     if( activeEvent !== null ){
       setFormValues({ ...activeEvent })
     }
-
-    console.log('activeEvent', activeEvent);
-
     return ()=> {
-      console.log('desmontado');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +97,6 @@ export const CalendarModal = () => {
     const difference = differenceInSeconds( formValues.end, formValues.start );
 
     if( isNaN( difference ) || difference <= 0  ){
-      //console.log('Error de fechas');
       Swal.fire({
         title: 'Error!',
         text: 'Fechas incorrectas, porfavor válide las fechas nuevamente',
@@ -113,7 +107,6 @@ export const CalendarModal = () => {
     }
 
     if( formValues.title.length <= 0 ){
-      //console.log('Error de titulo');
       Swal.fire({
         title: 'Error!',
         text: 'Error en el titulo, porfavor válide el titulo de evento nuevemente',
@@ -124,7 +117,6 @@ export const CalendarModal = () => {
     }
 
     if( formValues.notes.trim().length <= 0 ){
-      //console.log('Error de notas');
       Swal.fire({
         title: 'Error!',
         text: 'Error en nota, porfavro válide la nota nuevamente',
@@ -134,7 +126,6 @@ export const CalendarModal = () => {
       return;
     }
 
-    console.log({formValues});
     await startSavingEvent( formValues );
     closeDateModal();
     setFormSubmitted(false);

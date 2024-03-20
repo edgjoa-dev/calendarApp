@@ -29,7 +29,6 @@ import './LoginPage.css'
     const onLoginSubmit = (e)=> {
         e.preventDefault();
         startLogin({ email: loginEmail, password: loginPassword });
-        console.log(loginEmail, loginPassword);
     }
 
     const onRegisterSubmit = (e)=> {
@@ -42,7 +41,6 @@ import './LoginPage.css'
             toast.error('Las contraseñas deben coincidir, intenta nuevamente');
         }
         startRegister({ name: registerName, email: registerEmail, password: registerPassword, revalidPassword: registerPassword2});
-        console.log(registerName, registerEmail, registerPassword, registerPassword2);
     }
 
     useEffect(()=>{

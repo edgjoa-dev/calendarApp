@@ -37,17 +37,14 @@ export const CalendarPage = () => {
 
   }
   const onDobleClick = (event) => {
-    //console.log({doubleClick: event})
     openDateModal();
   }
 
   const onSelect = (event) => {
-    //console.log({onSelect:event});
     setActiveEvent(event)
   }
 
   const onViewChanged = (event) => {
-    //console.log({ viewChanged: event });
 
     localStorage.setItem('lastView', event)
     setLastView(event)
