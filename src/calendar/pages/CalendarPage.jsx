@@ -5,10 +5,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { NavBar } from "../../themes"
 import { getMessagesES, localizer } from "../../helpers"
 import { CalendarEvent, CalendarModal, FabAddNew, FabDelete } from "../../components"
-import { useCalendarStore, useUiStore } from "../../hooks"
+import { useAuthStore, useCalendarStore, useUiStore } from "../../hooks"
 
 
 export const CalendarPage = () => {
+  const { user } = useAuthStore()
   const { openDateModal } = useUiStore()
   const { events, setActiveEvent, startLoadingEvents } = useCalendarStore()
 
@@ -17,16 +18,22 @@ export const CalendarPage = () => {
 
   const eventStyleGetter = (event, start, end, isSelected) => {
 
-    const style = {
-      backgroundColor: '#347CF7',
-      borderRadius: '0px',
-      opacity: 0.8,
-      color: 'white'
-    }
+    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid);
 
-    return {
-      style
-    }
+
+      const style = {
+        display:  isMyEvent ? 'block' : 'none',
+        backgroundColor:'#347CF7',
+        borderRadius: '0px',
+        opacity: 0.8,
+        color: 'white'
+      }
+      return {
+        style
+      }
+
+
+
 
   }
   const onDobleClick = (event) => {
