@@ -1,4 +1,4 @@
-import { BrowserRouter, HashRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { Provider }  from 'react-redux'
 
 import { AppRouter } from "./routes"
