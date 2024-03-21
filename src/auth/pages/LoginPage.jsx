@@ -28,11 +28,28 @@ import './LoginPage.css'
 
     const onLoginSubmit = (e)=> {
         e.preventDefault();
+
+        if (!/^[^\s@]+@gmail\.com$/.test(registerEmail)) {
+            toast.error('Por favor, ingresa un correo electrónico válido de Gmail.');
+            return;
+            }
+
         startLogin({ email: loginEmail, password: loginPassword });
     }
 
     const onRegisterSubmit = (e)=> {
         e.preventDefault();
+
+        if(registerName.length < 3){
+            toast.error('El nombre debe tener al menos 3 caracteres');
+            return;
+        }
+
+        if (!/^[^\s@]+@gmail\.com$/.test(registerEmail)) {
+            toast.error('Por favor, ingresa un correo electrónico válido de Gmail.');
+            return;
+            }
+
         if(registerPassword !== registerPassword2){
             <Toaster
                 position="bottom-center"
@@ -40,6 +57,14 @@ import './LoginPage.css'
             />
             toast.error('Las contraseñas deben coincidir, intenta nuevamente');
         }
+
+        if (registerPassword.length < 9 || !/\d/.test(registerPassword) || !/[a-z]/.test(registerPassword) || !/[A-Z]/.test(registerPassword) || !/[!¡@#*]+/.test(registerPassword)) {
+        toast.error('La contraseña debe tener al menos 9 caracteres, incluyendo mayúsculas, minúsculas, números y al menos uno de los siguientes signos: !¡@#*');
+        return;
+        }
+
+
+
         startRegister({ name: registerName, email: registerEmail, password: registerPassword, revalidPassword: registerPassword2});
     }
 
