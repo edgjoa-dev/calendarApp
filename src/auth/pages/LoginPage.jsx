@@ -29,8 +29,12 @@ import './LoginPage.css'
     const onLoginSubmit = (e)=> {
         e.preventDefault();
 
-        if (!/^[^\s@]+@gmail\.com$/.test(registerEmail)) {
+        if (!/^[^\s@]+@gmail\.com$/.test(loginEmail)) {
             toast.error('Por favor, ingresa un correo electrónico válido de Gmail.');
+            return;
+            }
+        if (loginPassword.length < 9 || !/\d/.test(loginPassword) || !/[a-z]/.test(loginPassword) || !/[A-Z]/.test(loginPassword) || !/[!¡@#*]+/.test(loginPassword)) {
+            toast.error('La contraseña debe tener al menos 9 caracteres, incluyendo mayúsculas, minúsculas, números y al menos uno de los siguientes signos: !¡@#*');
             return;
             }
 
